@@ -29,7 +29,34 @@
 
 // Select all the <li>s
 // Method 2 (using CSS class) -> this is just one line! (see '.completed' in CSS):
-$('li').click(function () {
+
+// ISSUE (isse when trying to delete todos - see 'Add Todo' function below).
+
+// 'click()' will only add listeners for EXISTING elements.
+// 'on()' will add listeners for all POTENTIAL FUTURE elements.
+// So, we need to use 'on()' instead of 'click()',
+// because we want those listeners to be listening on ALL POTENTIAL <li>s.
+
+// BUT, we can not just swap and just use 'on('click')' up above - this still won't work.
+// What we need to do is to change our code slightly.
+
+// Instead of:
+// $('li').click(function () {
+
+// Do this:
+
+// We can only add a listener using jQuery on elements that exist when this code is run the first time.
+// And when this code is run the first time, we don't have all the <li>s (since more are added whenever we add todos - initially, we just have 3).
+// So, if we just add a click listener to "li" like we did originally (see code above), it will only add to those initial 3.
+// So, what we do instead, is add a listener to the ENTIRE ul parent,
+// so any time we click on that ul, this listener will fire. EXCEPT, we add a second argument here ("li").
+// And what this does, is it says, when an "li" is clicked inside of a "ul", then run this code:
+
+// So we added a listener to an element that exists when the page loads,
+// but we're only really listening to the <li>s that are clicked inside of that ul.
+
+// This also needs to be done in the DELETE function (see below).
+$('ul').on('click', 'li', function () {
   $(this).toggleClass('completed');
 });
 
@@ -52,7 +79,10 @@ $('li').click(function () {
 // So all we need to do, is to add the 'event' object inside the span click listener,
 // and then add a method called 'stopPropagation' (a jQuery method), which will stop the event from bubbling up.
 // So, it will fire on the span, but will NOT continue to the <li> click listener (or any others):
-$('span').click(function (event) {
+
+// $('span').click(function (event) {
+
+$('ul').on('click', 'span', function (event) {
   event.stopPropagation();
 
   // Remove <li> that contains todo.
@@ -64,4 +94,40 @@ $('span').click(function (event) {
     .fadeOut(500, function () {
       $(this).remove();
     });
+});
+
+// Add Todo (added when hitting ENTER key)
+// Can use 'keypress' or 'on' for ENTER key.
+
+// Select the input - to be more specific, use: input[type='text']
+// This will effect all inputs where input[type='text']
+
+$("input[type='text']").keypress(function (event) {
+  //   console.log('Key pressed!');
+  // Use 'which' property to correspond to the character code of the key that is pressed (code for ENTER key is '13'):
+  if (event.which === 13) {
+    // console.log('ENTER key pressed!');
+    // Grab text of new todo from input (use the '.val' method):
+    // console.log($(this).val());
+    var todoText = $(this).val();
+
+    // Clear the input
+    $(this).val('');
+
+    // Create a new <li> and add it to the ul (use the 'append' method).
+    // Use 'append' to append the <li> to the ul.
+
+    // ISSUE
+    // HOWEVER, although we add the span with the X, we will not be able to delete the todo when we click on the X.
+    // Why?
+    // 'click()' will only add listeners for EXISTING elements.
+    // 'on()' will add listeners for all POTENTIAL FUTURE elements.
+    // So, we need to use 'on()' instead of 'click()',
+    // because we want those listeners to be listening on ALL POTENTIAL <li>s.
+
+    // BUT, we can not just swap and just use 'on('click')' up above - this still won't work.
+    // What we need to do is to change our code slightly (see above way up at start of Method 2 function).
+
+    $('ul').append('<li><span>X</span> ' + todoText + '</li>');
+  }
 });
