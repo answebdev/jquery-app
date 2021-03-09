@@ -1,5 +1,17 @@
 body {
   font-family: 'Roboto', sans-serif;
+  /* From: https://uigradients.com/ */
+  background: #ff9966; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #ff5e62,
+    #ff9966
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #ff5e62,
+    #ff9966
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 h1 {
@@ -12,6 +24,10 @@ h1 {
   font-weight: normal;
 }
 
+.fa-plus {
+  float: right;
+}
+
 input {
   font-size: 18px;
   color: #2980b9;
@@ -19,7 +35,11 @@ input {
   width: 100%;
   padding: 13px 13px 13px 20px;
 
-  /* Make sure we add prefixes for this property (e.g. -webkkit): */
+  /* This will give the input an invisible border,
+  so that it looks smoothe and flush all the way around without any ugly gaps: */
+  border: 3px solid rgba(0, 0, 0, 0);
+
+  /* Make sure we add browser prefixes for this property (e.g. -webkkit): */
   box-sizing: border-box;
 }
 
@@ -27,6 +47,34 @@ input:focus {
   background: #ffffff;
   border: 3px solid #2980b9;
   outline: none;
+}
+
+span {
+  background: #e74c3c;
+  height: 40px;
+  margin-right: 20px;
+  text-align: center;
+  color: #ffffff;
+  width: 0;
+  display: inline-block;
+
+  /* For smooth animation effect: */
+  transition: 0.2s linear;
+
+  /* Set to 0, then to 1 when we hover over it,
+  that way we don't see the icon when we do not hover over it
+  and it looks like it's fading away as we hover off of it: */
+  opacity: 0;
+}
+
+/* The spans are actually hidden when the page loads - they have a width of 0.
+So when we hover, we can increase the width of the spans to 40px.
+Then we can animate it using the transition property.
+We need to set this to when we hover over the <li> and not just the span,
+and then we need to select the span that's inside of the li that's being hovered over */
+li:hover span {
+  width: 40px;
+  opacity: 1;
 }
 
 ul {

@@ -128,6 +128,8 @@ $("input[type='text']").keypress(function (event) {
     // BUT, we can not just swap and just use 'on('click')' up above - this still won't work.
     // What we need to do is to change our code slightly (see above way up at start of Method 2 function).
 
-    $('ul').append('<li><span>X</span> ' + todoText + '</li>');
+    $('ul').append(
+      '<li><span><i class="fa fa-trash"></i></span> ' + todoText + '</li>'
+    );
   }
 });
