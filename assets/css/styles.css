@@ -39,6 +39,7 @@ input {
   /* This will give the input an invisible border,
   so that it looks smoothe and flush all the way around without any ugly gaps: */
   border: 3px solid rgba(0, 0, 0, 0);
+  /* ------------------------------------------ */
 
   /* Make sure we add browser prefixes for this property (e.g. -webkkit): */
   box-sizing: border-box;
