@@ -1,7 +1,12 @@
 #container {
-  background: gray;
   width: 360px;
 
   /* Center the div: */
   margin: 0 auto;
+  border: 2px solid gray;
+}
+
+.completed {
+  color: gray;
+  text-decoration: line-through;
 }
